@@ -1,10 +1,10 @@
-import { UserButton } from "@clerk/nextjs";
+import { SearchInput } from "@/components/search-input";
 
 export default function Home() {
     return (
-     <>
-     <UserButton afterSignOutUrl="/" />
-     </>
+     <div className="p-4 space-y-2 h-full">
+      <SearchInput />
+     </div>
     )
   }
   
