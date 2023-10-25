@@ -17,7 +17,6 @@ export default async function ChatIdPage({ params }: ChatIdPageProps) {
   const companion = await db.companion.findUnique({
     where: {
       id: chatId,
-      userId,
     },
     include: {
       messages: {
