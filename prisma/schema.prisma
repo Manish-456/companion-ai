@@ -2,17 +2,18 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
+
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Category {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
   companions Companion[]
 }
 
@@ -28,10 +29,29 @@ model Companion {
 
   categoryId String   @db.ObjectId
   category   Category @relation(fields: [categoryId], references: [id])
-  
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  message   Message[]
+
   @@index([categoryId])
   @@fulltext([name])
+}
+
+enum ROLE {
+  USER
+  SYSTEM
+}
+
+model Message {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  role    ROLE
+  content String @db.String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId      String
+  companionId String    @db.ObjectId
+  companion   Companion @relation(fields: [companionId], references: [id], onDelete: Cascade)
 }
