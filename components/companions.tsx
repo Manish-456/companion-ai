@@ -1,5 +1,3 @@
-"use client";
-
 import { Companion } from "@prisma/client";
 import Image from "next/image";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
