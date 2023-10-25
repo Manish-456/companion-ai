@@ -24,12 +24,7 @@ export async function POST(req : Request){
         data : {
             username : user.firstName,
             userId : user.id,
-            src,
-            name,
-            description,
-            categoryId,
-            instructions,
-            seed
+            ...body
         }
      });
 
