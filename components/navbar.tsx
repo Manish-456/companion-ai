@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Poppins } from "next/font/google";
 import { UserButton } from "@clerk/nextjs";
@@ -6,17 +8,22 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {MobileSidebar} from "./mobile-sidebar";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const font = Poppins({
   weight: "600",
   subsets: ["latin"],
 });
 
-export function Navbar() {
+interface NavbarProps {
+  isPro : boolean;
+}
+export function Navbar({isPro} : NavbarProps) {
+  const proModal = useProModal();
   return (
     <div className="fixed w-full z-50 flex justify-between h-16 items-center py-2 px-4 border-b border-primary/10 bg-secondary">
       <div className="flex items-center">
-     <MobileSidebar />
+     <MobileSidebar isPro={isPro}/>
         <Link href={"/"}>
           <h1
             className={cn(
@@ -30,9 +37,9 @@ export function Navbar() {
       </div>
       <div className="flex items-center gap-x-3">
         <ThemeToggle />
-        <Button variant={"premium"} size={"sm"} >Upgrade
+        {!isPro && <Button variant={"premium"} size={"sm"} onClick={proModal.onOpen} >Upgrade
             <Sparkles className="h-4 w-4 fill-white text-white ml-2" />
-        </Button>
+        </Button>}
         <UserButton afterSignOutUrl="/" />
       </div>
     </div>
