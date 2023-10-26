@@ -48,7 +48,7 @@ export function ChatMessages({
           role={message.role}
           key={message.content}
           content={message.content}
-          src={message.src}
+          src={companion.src}
         />
       ))}
       {isLoading && <ChatMessage role="SYSTEM" src={companion.src} isLoading />}
