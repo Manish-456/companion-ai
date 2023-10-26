@@ -32,7 +32,7 @@ model Companion {
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  messages   Message[]
+  messages  Message[]
 
   @@index([categoryId])
   @@fulltext([name])
@@ -54,4 +54,13 @@ model Message {
   userId      String
   companionId String    @db.ObjectId
   companion   Companion @relation(fields: [companionId], references: [id], onDelete: Cascade)
+}
+
+model UserSubscription {
+  id                     String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId                 String    @unique
+  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?   @unique @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @unique @map(name: "stripe_current_period_end")
 }
