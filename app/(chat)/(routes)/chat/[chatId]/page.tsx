@@ -21,7 +21,7 @@ export default async function ChatIdPage({ params }: ChatIdPageProps) {
     include: {
       messages: {
         orderBy: {
-          createdAt: "desc",
+          createdAt: "asc",
         },
         where: {
           userId,
